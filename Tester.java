@@ -45,17 +45,17 @@ public class Tester {
   }
 
   public static void balanceTester() {
-    int[] depositAmounts = {0, 121321321, -21432, -2, 1};
-    boolean[] depositTestResults = {true, true, false, false, true};
-    BankAccount[] bankAccounts = new BankAccount[5];
+    double[] depositAmounts = {0, 121321321, -21432, -2, 1, Math.PI};
+    boolean[] depositTestResults = {true, true, false, false, true, true};
+    BankAccount[] bankAccounts = new BankAccount[6];
 
-    for (int index = 0; index < bankAccounts.length; index++) {
+    for (int index = 0; index < bankAccounts.length; index++) {                 //initiaties bankAccounts
       BankAccount account = new BankAccount(1, "");
       bankAccounts[index] = account;
     }
 
     System.out.println("deposit() TEST");
-    for (int index = 0; index < depositAmounts.length; index++) {
+    for (int index = 0; index < bankAccounts.length; index++) {
       if (bankAccounts[index].deposit(depositAmounts[index]) == depositTestResults[index]) {
         System.out.println("deposit function succeeded.");
       } else {
@@ -65,16 +65,43 @@ public class Tester {
     }
 
     System.out.println("getBalance() TEST");
-    int[] expectedBal = {0, 121321321, 0, 0, 1};
-    for (int index = 0; index < expectedBal.length; index++) {
-      if (bankAccounts[index].getBalance() == expectedBal[index]) {
+    double[] depositedAmounts = {0, 121321321, 0, 0, 1, Math.PI};
+    for (int index = 0; index < bankAccounts.length; index++) {
+      if (bankAccounts[index].getBalance() == depositedAmounts[index]) {
         System.out.println("getBalance + deposit function succeeded.");
       } else {
         errorHorn();
-        System.out.println("Depoist or getBalance function failed");
+        System.out.println("Deposit or getBalance function failed");
       }
     }
 
+    System.out.println("withdraw() TEST");
+    double[] withdrawAmounts = {0, 10000, 2048, -100, 20042, Math.PI};
+    boolean[] withdrawTestResults = {true, true, true, false, false, true};
+    for (int index = 0; index < bankAccounts.length; index++) {                 //creates bank accounts with same amount of money for withdraw testing
+      BankAccount account = new BankAccount(1, "");
+      account.deposit(10000.);
+      bankAccounts[index] = account;
+    }
+    for (int index = 0; index < bankAccounts.length; index++) {
+      if (bankAccounts[index].withdraw(withdrawAmounts[index]) == withdrawTestResults[index]) {
+        System.out.println("withdraw function succeeded.");
+      } else {
+        errorHorn();
+        System.out.println("withdraw function failed");
+      }
+    }
+
+    System.out.println("getBalance() TEST 2");
+    double[] postWithdrawExpectedBal = {10000, 0, (10000 - 2048), 10000, 10000, (10000 - Math.PI)};
+    for (int index = 0; index < bankAccounts.length; index++) {
+      if (bankAccounts[index].getBalance() == postWithdrawExpectedBal[index]) {
+        System.out.println("getBalance + withdraw function succeeded.");
+      } else {
+        errorHorn();
+        System.out.println("Withdraw or getBalance function failed");
+      }
+    }
   }
 
 }
