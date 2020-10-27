@@ -3,9 +3,8 @@ public class Tester {
   public static void main(String[] args) {
     idTester();
     balanceTester();
+    toStringTester();
   }
-
-
 
   public static void errorHorn() {
     System.out.println("ERROR!\nERROR\nERROR");
@@ -60,7 +59,7 @@ public class Tester {
         System.out.println("deposit function succeeded.");
       } else {
         errorHorn();
-        System.out.println("deposit function failed");
+        System.out.println("deposit function failed at index: " + index);
       }
     }
 
@@ -71,7 +70,7 @@ public class Tester {
         System.out.println("getBalance + deposit function succeeded.");
       } else {
         errorHorn();
-        System.out.println("Deposit or getBalance function failed");
+        System.out.println("Deposit or getBalance function failed at index: " + index);
       }
     }
 
@@ -88,7 +87,7 @@ public class Tester {
         System.out.println("withdraw function succeeded.");
       } else {
         errorHorn();
-        System.out.println("withdraw function failed");
+        System.out.println("withdraw function failed at index: " + index);
       }
     }
 
@@ -99,7 +98,33 @@ public class Tester {
         System.out.println("getBalance + withdraw function succeeded.");
       } else {
         errorHorn();
-        System.out.println("Withdraw or getBalance function failed");
+        System.out.println("Withdraw or getBalance function failed at index: " + index);
+      }
+    }
+  }
+
+  public static void toStringTester() {
+    System.out.println("toString() Tester");
+    int[] accountIDs = new int[10];
+    for (int index = 0; index < accountIDs.length; index++) {
+      accountIDs[index] = (int)(Math.random() * 100000000);
+    }
+    double[] accountBalances = new double[10];
+    for (int index = 0; index < accountBalances.length; index++) {
+      accountBalances[index] = Math.random() + Math.pow(10, Math.random() * 1000);
+    }
+
+    for (int index = 0; index < accountIDs.length; index++) {
+      BankAccount account = new BankAccount(accountIDs[index], "");
+      account.deposit(accountBalances[index]);
+      String expectedString = accountIDs[index] + "\t" + accountBalances[index];
+      if (expectedString.equals(account.toString())) {
+        System.out.println("toString function succeeded.");
+      } else {
+        errorHorn();
+        System.out.println("toString function failed.");
+        System.out.println("Expected: " + accountBalances[index]);
+        System.out.println("Received: " + account.toString());
       }
     }
   }
