@@ -117,13 +117,13 @@ public class Tester {
     for (int index = 0; index < accountIDs.length; index++) {
       BankAccount account = new BankAccount(accountIDs[index], "");
       account.deposit(accountBalances[index]);
-      String expectedString = accountIDs[index] + "\t" + accountBalances[index];
+      String expectedString = "#" + accountIDs[index] + "\t$" + accountBalances[index];
       if (expectedString.equals(account.toString())) {
         System.out.println("toString function succeeded.");
       } else {
         errorHorn();
         System.out.println("toString function failed.");
-        System.out.println("Expected: " + accountBalances[index]);
+        System.out.println("Expected: " + expectedString);
         System.out.println("Received: " + account.toString());
       }
     }
